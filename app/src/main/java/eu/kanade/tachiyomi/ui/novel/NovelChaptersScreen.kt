@@ -87,7 +87,12 @@ class NovelChaptersScreen(
                     if (error.isNotBlank()) {
                         item { Text("Chapter loading failed: $error", color = MaterialTheme.colorScheme.error) }
                     } else if (chapters.isEmpty()) {
-                        item { Text("No chapters were returned by this source.", style = MaterialTheme.typography.bodyLarge) }
+                        item {
+                            Text(
+                                "No chapters were returned by this source.",
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                        }
                     }
                 }
             }

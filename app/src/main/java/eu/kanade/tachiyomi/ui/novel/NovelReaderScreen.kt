@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import eu.kanade.presentation.components.AppBar
@@ -23,7 +24,6 @@ import eu.kanade.presentation.util.Screen
 import eu.kanade.tachiyomi.network.NetworkHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import androidx.core.content.edit
 import mihon.data.novel.NovelSourceClient
 import mihon.domain.novel.model.NovelSourceRegistry
 import uy.kohesive.injekt.injectLazy
@@ -44,7 +44,13 @@ class NovelReaderScreen(
         var error by remember { mutableStateOf("") }
         val paragraphs = remember(text) { text.split(Regex("\\n\\s*\\n")).filter { it.isNotBlank() } }
         val progressKey = remember(sourceId, url) { "novel_progress_${sourceId}_${url.hashCode()}" }
-        val listState = rememberLazyListState(initialFirstVisibleItemIndex = context.getSharedPreferences("manga_heroes_novels", 0).getInt(progressKey, 0))
+        val listState =
+            rememberLazyListState(
+                initialFirstVisibleItemIndex = context.getSharedPreferences(
+                    "manga_heroes_novels",
+                    0,
+                ).getInt(progressKey, 0),
+            )
 
         androidx.compose.runtime.LaunchedEffect(sourceId, url) {
             if (source == null) return@LaunchedEffect
@@ -55,11 +61,15 @@ class NovelReaderScreen(
             }
         }
         androidx.compose.runtime.LaunchedEffect(listState.firstVisibleItemIndex, text) {
-            context.getSharedPreferences("manga_heroes_novels", 0).edit { putInt(progressKey, listState.firstVisibleItemIndex) }
+            context.getSharedPreferences("manga_heroes_novels", 0).edit {
+                putInt(progressKey, listState.firstVisibleItemIndex)
+            }
         }
 
         tachiyomi.presentation.core.components.material.Scaffold(
-            topBar = { scrollBehavior -> AppBar(title = title, navigateUp = navigator::pop, scrollBehavior = scrollBehavior) },
+            topBar = { scrollBehavior ->
+                AppBar(title = title, navigateUp = navigator::pop, scrollBehavior = scrollBehavior)
+            },
         ) { padding ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize().padding(padding),
@@ -75,7 +85,10 @@ class NovelReaderScreen(
                         Text(
                             text = paragraph,
                             modifier = Modifier.padding(bottom = 16.dp),
-                            style = MaterialTheme.typography.bodyLarge.copy(lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.55f),
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                lineHeight =
+                                MaterialTheme.typography.bodyLarge.lineHeight * 1.55f,
+                            ),
                         )
                     }
                 }

@@ -24,7 +24,13 @@ class NovelSourceClient(
         return document.select(source.searchItemSelector).mapNotNull { item ->
             val title = item.select(source.titleSelector).firstOrNull()?.text()?.trim().orEmpty()
             val href = item.select(source.urlSelector).firstOrNull()?.absUrl("href").orEmpty()
-            if (title.isBlank() || href.isBlank() || !isHttpUrl(href)) null else NovelSearchResult(source.id, title, href)
+            if (title.isBlank() || href.isBlank() ||
+                !isHttpUrl(href)
+            ) {
+                null
+            } else {
+                NovelSearchResult(source.id, title, href)
+            }
         }
     }
 

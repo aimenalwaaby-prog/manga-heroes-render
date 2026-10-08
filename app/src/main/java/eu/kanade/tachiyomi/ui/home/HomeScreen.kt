@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -71,7 +72,6 @@ import mihon.icons.materialsymbols.rounded.NewReleases
 import mihon.icons.materialsymbols.rounded.Person
 import mihon.icons.materialsymbols.rounded.RocketLaunch
 import mihon.icons.materialsymbols.rounded.Settings
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import soup.compose.material.motion.animation.materialFadeThroughIn
 import soup.compose.material.motion.animation.materialFadeThroughOut
 import tachiyomi.domain.library.service.LibraryPreferences
@@ -198,7 +198,10 @@ object HomeScreen : Screen() {
                             horizontalArrangement = Arrangement.spacedBy(6.dp),
                         ) {
                             Icon(MaterialSymbols.Rounded.RocketLaunch, null, modifier = Modifier.padding(1.dp))
-                            Text(stringResource(R.string.heroes_brand_pill), style = MaterialTheme.typography.labelMedium)
+                            Text(
+                                stringResource(R.string.heroes_brand_pill),
+                                style = MaterialTheme.typography.labelMedium,
+                            )
                         }
                     }
                 }
@@ -245,7 +248,10 @@ object HomeScreen : Screen() {
                                     graph.libraryPreferences.newShowUpdatesCount.changes(),
                                     graph.libraryPreferences.newUpdatesCount.changes(),
                                 ) { show, value -> if (show) value else 0 }.collectLatest { value = it }
-                                is BrowseTab -> graph.sourcePreferences.extensionUpdatesCount.changes().collectLatest { value = it }
+                                is BrowseTab -> graph.sourcePreferences.extensionUpdatesCount.changes().collectLatest {
+                                    value =
+                                        it
+                                }
                                 else -> Unit
                             }
                         }
@@ -257,13 +263,16 @@ object HomeScreen : Screen() {
                                     Icon(tab.options.icon!!, contentDescription = tab.options.title)
                                     if (count > 0) {
                                         Badge(modifier = Modifier.align(Alignment.TopEnd)) {
-                                            Text(count.toString(), modifier = Modifier.semantics {
-                                                contentDescription = pluralStringResource(
-                                                    MR.plurals.notification_chapters_generic,
-                                                    count,
-                                                    count,
-                                                )
-                                            })
+                                            Text(
+                                                count.toString(),
+                                                modifier = Modifier.semantics {
+                                                    contentDescription = pluralStringResource(
+                                                        MR.plurals.notification_chapters_generic,
+                                                        count,
+                                                        count,
+                                                    )
+                                                },
+                                            )
                                         }
                                     }
                                 }

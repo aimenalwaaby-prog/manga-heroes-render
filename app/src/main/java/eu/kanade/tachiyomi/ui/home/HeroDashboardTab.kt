@@ -149,7 +149,11 @@ data object HeroDashboardTab : Tab {
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                             ) {
                                 Icon(MaterialSymbols.Rounded.RocketLaunch, null, tint = Color.White)
-                                Text(stringResource(R.string.heroes_home_ai_cta), color = Color.White, fontWeight = FontWeight.Bold)
+                                Text(
+                                    stringResource(R.string.heroes_home_ai_cta),
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                )
                             }
                         }
                     }
@@ -201,15 +205,28 @@ data object HeroDashboardTab : Tab {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    ),
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
                 ) {
                     Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Text(stringResource(R.string.heroes_content_modes), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                        Text(stringResource(R.string.heroes_content_modes_hint), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(
+                            stringResource(R.string.heroes_content_modes),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Text(
+                            stringResource(R.string.heroes_content_modes_hint),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            FilterChip(selected = true, onClick = { }, label = { Text(stringResource(R.string.heroes_manga_mode)) })
-                            FilterChip(selected = false, onClick = { navigator.push(NovelSourcesScreen()) }, label = { Text(stringResource(R.string.heroes_novel_mode)) })
+                            FilterChip(selected = true, onClick = {
+                            }, label = { Text(stringResource(R.string.heroes_manga_mode)) })
+                            FilterChip(selected = false, onClick = {
+                                navigator.push(NovelSourcesScreen())
+                            }, label = { Text(stringResource(R.string.heroes_novel_mode)) })
                         }
                     }
                 }
@@ -221,7 +238,11 @@ data object HeroDashboardTab : Tab {
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
                 ) {
                     Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text(stringResource(R.string.heroes_discover_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        Text(
+                            stringResource(R.string.heroes_discover_title),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                        )
                         Text(stringResource(R.string.heroes_discover_hint), style = MaterialTheme.typography.bodyMedium)
                         Surface(
                             onClick = { tabNavigator.current = BrowseTab },

@@ -27,15 +27,15 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import eu.kanade.presentation.components.AppBar
 import eu.kanade.presentation.util.Screen
+import eu.kanade.tachiyomi.network.NetworkHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import mihon.data.novel.NovelSearchResult
 import mihon.data.novel.NovelSourceClient
 import mihon.domain.novel.model.NovelSource
 import mihon.domain.novel.model.NovelSourceRegistry
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.injectLazy
-import eu.kanade.tachiyomi.network.NetworkHelper
 
 class NovelSourcesScreen : Screen() {
     private val network: NetworkHelper by injectLazy()
@@ -87,7 +87,10 @@ class NovelSourcesScreen : Screen() {
                                     error = ""
                                     scope.launch {
                                         val fetched = withContext(Dispatchers.IO) {
-                                            sources.map { source -> source to runCatching { client.search(source, query.trim()) } }
+                                            sources.map { source ->
+                                                source to
+                                                    runCatching { client.search(source, query.trim()) }
+                                            }
                                         }
                                         results = fetched.flatMap { (source, result) ->
                                             result.getOrElse {
@@ -96,7 +99,10 @@ class NovelSourcesScreen : Screen() {
                                             }.map { source to it }
                                         }
                                         loading = false
-                                        if (sources.isEmpty()) error = "No compatible SAFE novel sources are registered. Refresh a repository that declares novelSources first."
+                                        if (sources.isEmpty()) {
+                                            error =
+                                                "No compatible SAFE novel sources are registered. Refresh a repository that declares novelSources first."
+                                        }
                                     }
                                 },
                             ) {
@@ -122,9 +128,15 @@ class NovelSourcesScreen : Screen() {
                     Card(Modifier.fillMaxWidth()) {
                         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                             Text(result.title, style = MaterialTheme.typography.titleMedium)
-                            Text("${source.name} · ${source.lang}", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                            Text(
+                                "${source.name} · ${source.lang}",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Button(onClick = { navigator.push(NovelChaptersScreen(result.title, result.url, source.id)) }) {
+                                Button(onClick = {
+                                    navigator.push(NovelChaptersScreen(result.title, result.url, source.id))
+                                }) {
                                     Text("Chapters")
                                 }
                             }

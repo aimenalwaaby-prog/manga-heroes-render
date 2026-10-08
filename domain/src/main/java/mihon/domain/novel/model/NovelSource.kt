@@ -32,7 +32,9 @@ object NovelSourceRegistry {
     }
 
     @Synchronized
-    fun all(): List<NovelSource> = sources.values.flatten().filter { it.contentWarning.equals("SAFE", ignoreCase = true) }.distinctBy { it.id }
+    fun all(): List<NovelSource> = sources.values.flatten().filter {
+        it.contentWarning.equals("SAFE", ignoreCase = true)
+    }.distinctBy { it.id }
 
     @Synchronized
     fun clear(repositoryUrl: String) {
