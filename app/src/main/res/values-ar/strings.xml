@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">مانجا هيروز</string>
+    <string name="heroes_entry">ملف مانجا هيروز وأهداف القراءة</string>
+    <string name="heroes_title">ملف القارئ</string>
+    <string name="heroes_welcome">رحلتك في القراءة</string>
+    <string name="heroes_profile_hint">أضف اسمًا لملفك المحلي</string>
+    <string name="heroes_username">اسم القارئ</string>
+    <string name="heroes_save_profile">حفظ الملف</string>
+    <string name="heroes_preferences">تفضيلات القراءة</string>
+    <string name="heroes_genres_hint">اختر تصنيفاتك المفضلة لتخصيص الاستكشاف</string>
+    <string name="heroes_genre_action">أكشن</string>
+    <string name="heroes_genre_adventure">مغامرة</string>
+    <string name="heroes_genre_fantasy">فانتازيا</string>
+    <string name="heroes_genre_comedy">كوميديا</string>
+    <string name="heroes_genre_drama">دراما</string>
+    <string name="heroes_genre_romance">رومانسية</string>
+    <string name="heroes_genre_mystery">غموض</string>
+    <string name="heroes_genre_scifi">خيال علمي</string>
+    <string name="heroes_layout_hint">طريقة عرض المكتبة المفضلة</string>
+    <string name="heroes_vertical">عمودي</string>
+    <string name="heroes_horizontal">أفقي</string>
+    <string name="heroes_daily_title">مهام اليوم</string>
+    <string name="heroes_daily_subtitle">أهداف اختيارية — تظل مكتبتك والقارئ متاحين دائمًا.</string>
+    <string name="heroes_mission_one">اقرأ فصلًا واحدًا</string>
+    <string name="heroes_mission_three">اقرأ ثلاثة فصول</string>
+    <string name="heroes_mission_discover">اكتشف عملًا جديدًا</string>
+    <string name="heroes_mission_favorite">أضف عملًا إلى المفضلة</string>
+    <string name="heroes_challenge_progress">إنجاز اليوم: %1$d من 4 مهام</string>
+    <string name="heroes_open_stats">فتح إحصاءات القراءة</string>
+    <string name="heroes_local_title">دليل المحتوى المحلي</string>
+    <string name="heroes_local_summary">استخدم المجلدات وملفات CBZ/ZIP أو الصور كمصدر محلي خاص.</string>
+    <string name="heroes_show_guide">عرض دليل الإعداد</string>
+    <string name="heroes_hide_guide">إخفاء الدليل</string>
+    <string name="heroes_local_guide">١. أنشئ مجلدًا أو اختر مجلدًا في مساحة الجهاز، ثم أضفه من تصفح ← المصدر المحلي.\n٢. ضع كل عمل في مجلد مستقل، ورتّب صور الفصول حسب تسلسل القراءة، أو احفظ الفصل في ملف CBZ/ZIP.\n٣. اجمع الصور المدعومة (JPG وPNG وWEBP والصيغ التي يدعمها Android) داخل مجلد الفصل أو أرشيفه.\n٤. من المصدر المحلي حدّث المجلد لاكتشاف الملفات الجديدة أو المعدّلة. افتح العمل لمراجعة فصوله وقراءتها كالمحتوى عبر الإنترنت.\n٥. احتفظ بنسخة احتياطية لقاعدة التطبيق من الإعدادات ← البيانات والتخزين. إزالة المصدر المحلي لا تحذف الملفات من مجلد الجهاز.</string>
+    <string name="heroes_ai_title">ذكاء مانجا هيروز</string>
+    <string name="heroes_ai_description">اطلب أفكارًا لاكتشاف الأعمال أو مساعدة في القراءة. تمر الطلبات عبر خادم Manga Heroes، ويبقى مفتاح المزوّد على الخادم ولا يُضمّن في التطبيق.</string>
+    <string name="heroes_ai_prompt">ما الذي تريد اكتشافه؟</string>
+    <string name="heroes_ai_send">اسأل المساعد الذكي</string>
+    <string name="heroes_ai_loading">جارٍ التفكير…</string>
+    <string name="heroes_ai_not_configured">خادم الذكاء الاصطناعي غير مضبوط في هذا الإصدار.</string>
+    <string name="heroes_ai_error">تعذر الاتصال بخدمة الذكاء الاصطناعي. تحقق من اتصالك وحاول مجددًا.</string>
+    <string name="heroes_ai_empty">اكتب سؤالك أولًا.</string>
+    <string name="heroes_privacy_note">يُحفظ الملف والتصنيفات المفضلة وطريقة العرض وعلامات المهام على هذا الجهاز. يرسل المساعد سؤالك والتصنيفات المختارة ولغة التطبيق إلى الخادم؛ ولا يُرسل اسم ملفك.</string>
+</resources>
