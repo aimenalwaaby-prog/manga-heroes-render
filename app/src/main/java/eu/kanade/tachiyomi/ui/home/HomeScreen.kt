@@ -185,7 +185,7 @@ object HomeScreen : Screen() {
             MoreTab -> coreStringResource(MR.strings.label_more)
             else -> "Manga Heroes"
         }
-        tachiyomi.presentation.core.components.material.TopAppBar(
+        TopAppBar(
             title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
             scrollBehavior = scrollBehavior,
             actions = {
@@ -265,15 +265,16 @@ object HomeScreen : Screen() {
                                 Box {
                                     Icon(tab.options.icon!!, contentDescription = tab.options.title)
                                     if (count > 0) {
+                                        val chapterCountDescription = pluralStringResource(
+                                            MR.plurals.notification_chapters_generic,
+                                            count,
+                                            count,
+                                        )
                                         Badge(modifier = Modifier.align(Alignment.TopEnd)) {
                                             Text(
                                                 count.toString(),
                                                 modifier = Modifier.semantics {
-                                                    contentDescription = pluralStringResource(
-                                                        MR.plurals.notification_chapters_generic,
-                                                        count,
-                                                        count,
-                                                    )
+                                                    contentDescription = chapterCountDescription
                                                 },
                                             )
                                         }

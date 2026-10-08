@@ -40,14 +40,15 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
-import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import eu.kanade.presentation.util.Tab
 import eu.kanade.presentation.util.isTabletUi
 import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.ui.browse.BrowseTab
@@ -74,7 +75,7 @@ data object HeroDashboardTab : Tab {
         get() = TabOptions(
             index = 0u,
             title = stringResource(R.string.heroes_home_title),
-            icon = MaterialSymbols.Rounded.Explore,
+            icon = rememberVectorPainter(MaterialSymbols.Rounded.Explore),
         )
 
     @Composable
