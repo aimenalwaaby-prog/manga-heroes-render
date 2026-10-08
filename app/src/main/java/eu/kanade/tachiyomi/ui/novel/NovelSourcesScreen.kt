@@ -29,6 +29,7 @@ import eu.kanade.presentation.components.AppBar
 import eu.kanade.presentation.util.Screen
 import mihon.data.novel.NovelSearchResult
 import mihon.data.novel.NovelSourceClient
+import mihon.domain.novel.model.NovelSource
 import mihon.domain.novel.model.NovelSourceRegistry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,7 +48,7 @@ class NovelSourcesScreen : Screen() {
         var query by remember { mutableStateOf("") }
         var loading by remember { mutableStateOf(false) }
         var error by remember { mutableStateOf("") }
-        var results by remember { mutableStateOf<List<Pair<String, NovelSearchResult>>>(emptyList()) }
+        var results by remember { mutableStateOf<List<Pair<NovelSource, NovelSearchResult>>>(emptyList()) }
         val sources = remember { NovelSourceRegistry.all() }
 
         tachiyomi.presentation.core.components.material.Scaffold(
@@ -67,7 +68,7 @@ class NovelSourcesScreen : Screen() {
                 item {
                     Card(Modifier.fillMaxWidth()) {
                         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                            Text("Novel sources", style = MaterialTheme.typography.titleLarge)
+                            Text("Novel sources (${sources.size})", style = MaterialTheme.typography.titleLarge)
                             Text(
                                 "These sources use the same repository layer, but text chapters get their own reader pipeline. Only repository entries explicitly marked SAFE are exposed here.",
                                 style = MaterialTheme.typography.bodyMedium,
@@ -85,15 +86,17 @@ class NovelSourcesScreen : Screen() {
                                     loading = true
                                     error = ""
                                     scope.launch {
-                                        results = withContext(Dispatchers.IO) {
-                                            sources.flatMap { source ->
-                                                runCatching { client.search(source, query.trim()) }
-                                                    .getOrDefault(emptyList())
-                                                    .map { source.name to it }
-                                            }
+                                        val fetched = withContext(Dispatchers.IO) {
+                                            sources.map { source -> source to runCatching { client.search(source, query.trim()) } }
+                                        }
+                                        results = fetched.flatMap { (source, result) ->
+                                            result.getOrElse {
+                                                error = "${source.name}: ${it.message ?: "source request failed"}"
+                                                emptyList()
+                                            }.map { source to it }
                                         }
                                         loading = false
-                                        if (sources.isEmpty()) error = "No novel sources are registered. Refresh a repository that declares novelSources first."
+                                        if (sources.isEmpty()) error = "No compatible SAFE novel sources are registered. Refresh a repository that declares novelSources first."
                                     }
                                 },
                             ) {
@@ -115,13 +118,13 @@ class NovelSourcesScreen : Screen() {
                     }
                 }
 
-                items(results) { (sourceName, result) ->
+                items(results) { (source, result) ->
                     Card(Modifier.fillMaxWidth()) {
                         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                             Text(result.title, style = MaterialTheme.typography.titleMedium)
-                            Text(sourceName, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                            Text("${source.name} · ${source.lang}", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Button(onClick = { navigator.push(NovelChaptersScreen(result.title, result.url, sources.first { it.name == sourceName }.id)) }) {
+                                Button(onClick = { navigator.push(NovelChaptersScreen(result.title, result.url, source.id)) }) {
                                     Text("Chapters")
                                 }
                             }

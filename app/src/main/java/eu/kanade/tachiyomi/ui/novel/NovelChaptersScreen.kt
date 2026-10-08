@@ -49,10 +49,15 @@ class NovelChaptersScreen(
         val client = remember { NovelSourceClient(network) }
         var loading by remember { mutableStateOf(source != null) }
         var chapters by remember { mutableStateOf<List<NovelChapter>>(emptyList()) }
+        var error by remember { mutableStateOf("") }
 
         androidx.compose.runtime.LaunchedEffect(sourceId, url) {
             if (source == null) return@LaunchedEffect
-            chapters = withContext(Dispatchers.IO) { runCatching { client.chapters(source, url) }.getOrDefault(emptyList()) }
+            val result = withContext(Dispatchers.IO) { runCatching { client.chapters(source, url) } }
+            chapters = result.getOrElse {
+                error = it.message ?: "Unable to load chapters from this source"
+                emptyList()
+            }
             loading = false
         }
 
@@ -79,7 +84,9 @@ class NovelChaptersScreen(
                             }
                         }
                     }
-                    if (chapters.isEmpty()) {
+                    if (error.isNotBlank()) {
+                        item { Text("Chapter loading failed: $error", color = MaterialTheme.colorScheme.error) }
+                    } else if (chapters.isEmpty()) {
                         item { Text("No chapters were returned by this source.", style = MaterialTheme.typography.bodyLarge) }
                     }
                 }
