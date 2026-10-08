@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -21,6 +22,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -37,6 +39,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
@@ -78,7 +81,7 @@ import tachiyomi.domain.library.service.LibraryPreferences
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.pluralStringResource
-import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.i18n.stringResource as coreStringResource
 
 object HomeScreen : Screen() {
     private val librarySearchEvent = Channel<String>()
@@ -170,16 +173,16 @@ object HomeScreen : Screen() {
 
     @Composable
     private fun HeroTopBar(
-        tab: eu.kanade.presentation.util.Tab,
+        tab: cafe.adriel.voyager.navigator.tab.Tab,
         scrollBehavior: androidx.compose.material3.TopAppBarScrollBehavior,
     ) {
         val title = when (tab) {
             HeroDashboardTab -> stringResource(R.string.heroes_home_title)
-            LibraryTab -> stringResource(MR.strings.label_library)
-            UpdatesTab -> stringResource(MR.strings.label_recent_updates)
-            BrowseTab -> stringResource(MR.strings.browse)
+            LibraryTab -> coreStringResource(MR.strings.label_library)
+            UpdatesTab -> coreStringResource(MR.strings.label_recent_updates)
+            BrowseTab -> coreStringResource(MR.strings.browse)
             HeroAiTab -> stringResource(R.string.heroes_ai_short_title)
-            MoreTab -> stringResource(MR.strings.label_more)
+            MoreTab -> coreStringResource(MR.strings.label_more)
             else -> "Manga Heroes"
         }
         tachiyomi.presentation.core.components.material.TopAppBar(
@@ -211,9 +214,9 @@ object HomeScreen : Screen() {
 
     @Composable
     private fun HeroBottomNavigation(
-        tabs: List<eu.kanade.presentation.util.Tab>,
-        current: eu.kanade.presentation.util.Tab,
-        onSelect: (eu.kanade.presentation.util.Tab) -> Unit,
+        tabs: List<cafe.adriel.voyager.navigator.tab.Tab>,
+        current: cafe.adriel.voyager.navigator.tab.Tab,
+        onSelect: (cafe.adriel.voyager.navigator.tab.Tab) -> Unit,
     ) {
         val context = LocalContext.current
         Surface(
