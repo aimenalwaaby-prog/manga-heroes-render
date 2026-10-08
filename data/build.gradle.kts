@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.injekt)
 
     implementation(libs.kotlinx.datetime)
+    implementation(libs.jsoup)
 
     implementation(libs.androidx.sqlite.bundled)
     implementation(libs.bundles.sqldelight)
